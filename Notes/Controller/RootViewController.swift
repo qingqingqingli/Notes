@@ -74,7 +74,6 @@ class RootViewController: UIViewController {
 }
 
 // MARK: - UITableViewDataSource
-
 extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return exsitingNotes().count
@@ -106,5 +105,4 @@ extension RootViewController: UITableViewDelegate {
         vc.selectedNote = selectedNote
         navigationController?.pushViewController(vc, animated: true)
     }
-    
 }

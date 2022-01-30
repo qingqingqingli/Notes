@@ -69,9 +69,19 @@ class NoteDetailsViewController: UIViewController {
     }
     
     @objc func deleteButtonTapped(_ sender: Any){
-        if let note = selectedNote {
-            CoreDataManager.sharedManager.delete(note)
-            navigationController?.popViewController(animated: true)
+        if (titleField.text.count > 0){
+            let alert = UIAlertController(title: "Please confirm", message: "Do you want to delete this note?", preferredStyle: .alert)
+            // TODO: return a void handler
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+                print("Dimiss clicked")
+            }))
+            alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                if let note = self.selectedNote {
+                    CoreDataManager.sharedManager.delete(note)
+                }
+                self.navigationController?.popViewController(animated: true)
+            }))
+            present(alert, animated: true)
         }
     }
     
