@@ -90,6 +90,7 @@ extension RootViewController: UITableViewDataSource {
             return UITableViewCell()
         }
     }
+    
 }
 
 // MARK: - UITableViewDelegate
@@ -104,5 +105,19 @@ extension RootViewController: UITableViewDelegate {
         let vc = NoteDetailsViewController()
         vc.selectedNote = selectedNote
         navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            tableView.beginUpdates()
+            let selectedNote = exsitingNotes()[indexPath.row]
+            CoreDataManager.sharedManager.delete(selectedNote)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+        }
     }
 }
