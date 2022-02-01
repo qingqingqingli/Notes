@@ -17,7 +17,7 @@ class NoteTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        titleLabel.font = .boldSystemFont(ofSize: 20)
+        titleLabel.font = .boldSystemFont(ofSize: 18)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleLabel)
         
@@ -25,7 +25,7 @@ class NoteTableViewCell: UITableViewCell {
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(contentLabel)
         
-        creationTimeLabel.font = .systemFont(ofSize: 16)
+        creationTimeLabel.font = .systemFont(ofSize: 14)
         creationTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(creationTimeLabel)
         
@@ -39,7 +39,7 @@ class NoteTableViewCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: widthPadding),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -widthPadding),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -100),
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: heightPadding),
             titleLabel.heightAnchor.constraint(equalToConstant: labelHeight)
         ])
@@ -58,7 +58,7 @@ class NoteTableViewCell: UITableViewCell {
     // MARK: - Configure note
     func configure(note: Note){
         let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "YYYY/MM/DD"
+        dateFormat.dateFormat = "YYYY/MM/dd"
         
         titleLabel.text = note.title
         contentLabel.text = note.content
