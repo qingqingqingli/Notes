@@ -26,7 +26,7 @@ class CoreDataManager {
         })
         return container
     }()
-    
+        
     // MARK: - Core Data Saving support
     func saveContext () {
         let context = persistentContainer.viewContext
@@ -40,59 +40,56 @@ class CoreDataManager {
         }
     }
     
+    // MARK: - Note operations
     func delete(_ note: Note){
-        let context: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let context = persistentContainer.viewContext
         context.delete(note)
         do {
             try context.save()
             fetchAllNotes()
-        } catch {
-            print("Fetch failed")
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
-    // TODO: Change the save logic
-    func save(_ selectedNote: Note?, title: String, content: String) {
-        let context: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        
-        // create a new note
-        if (selectedNote == nil) {
-            let entity = NSEntityDescription.entity(forEntityName: "Note", in: context)
-            let newNote = Note(entity: entity!, insertInto: context)
-            newNote.id = UUID().uuidString
-            newNote.title = title
-            newNote.content = content
-            newNote.creationTime = Date()
-            do {
-                try context.save()
-                notes.append(newNote)
-            }
-            catch {
-                print("context save error")
-            }
+    func createNote(title: String, content: String) {
+        let context = persistentContainer.viewContext
+        let newNote = Note(context: context)
+        newNote.id = UUID().uuidString
+        newNote.title = title
+        newNote.content = content
+        newNote.creationTime = Date()
+        do {
+            try context.save()
+            fetchAllNotes()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
-        // edit an existing note
+    }
+    
+    func updateNote(note: Note, title: String, content: String) {
+        let context = persistentContainer.viewContext
+        note.title = title
+        note.content = content
+        do {
+            try context.save()
+            fetchAllNotes()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    func save(_ selectedNote: Note?, title: String, content: String) {
+        if (selectedNote == nil) {
+            createNote(title: title, content: content)
+        }
         else {
-            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
-            do {
-                let results: NSArray = try context.fetch(request) as NSArray
-                for result in results {
-                    let note = result as! Note
-                    if (note == selectedNote) {
-                        note.title = title
-                        note.content = content
-                        note.creationTime = Date()
-                        try context.save()
-                    }
-                }
-            } catch {
-                print("Fetch failed")
-            }
+            updateNote(note: selectedNote!, title: title, content: content)
         }
     }
     
     func fetchAllNotes() {
-        let context: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
+        let context = persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
         do {
             notes = try context.fetch(request) as? [Note] ?? []
