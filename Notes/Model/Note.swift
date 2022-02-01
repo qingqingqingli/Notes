@@ -9,7 +9,7 @@ import CoreData
 
 @objc(Note)
 class Note: NSManagedObject {
-    @NSManaged var id: NSNumber?
+    @NSManaged var id: String?
     @NSManaged var title: String?
     @NSManaged var content: String?
     @NSManaged var creationTime: Date?

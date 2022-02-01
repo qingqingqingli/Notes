@@ -71,7 +71,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
     }
     
     // MARK: - Button action selectors
-    @objc func deleteButtonTapped(_ sender: Any){
+    @objc private func deleteButtonTapped(_ sender: Any){
         if (titleField.text.count > 0){
             let alert = UIAlertController(title: "Please confirm", message: "Do you want to delete this note?", preferredStyle: .alert)
             // TODO: return a void handler
@@ -88,7 +88,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         }
     }
     
-    @objc func saveButtonTapped(_ sender: Any){
+    @objc private func saveButtonTapped(_ sender: Any){
         CoreDataManager.sharedManager.save(
             selectedNote,
             title: titleField.text,

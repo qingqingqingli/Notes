@@ -66,7 +66,7 @@ class CoreDataManager {
         if (selectedNote == nil) {
             let entity = NSEntityDescription.entity(forEntityName: "Note", in: context)
             let newNote = Note(entity: entity!, insertInto: context)
-            newNote.id = notes.count as NSNumber
+            newNote.id = UUID().uuidString
             newNote.title = title
             newNote.content = content
             newNote.creationTime = Date()

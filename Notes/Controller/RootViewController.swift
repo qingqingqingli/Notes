@@ -53,33 +53,6 @@ class RootViewController: UIViewController {
         view.addSubview(tableView)
         
         setupViewConstraints()
-        
-//        // MARK: - 1.setup notification
-//        // TODO: Needs to handle user's acceptance or rejection to the permission setting
-//
-//        let center = UNUserNotificationCenter.current()
-//        center.requestAuthorization(options: [.alert, .sound]) { granted, error in
-//        }
-//
-//        // MARK: - 2.set up notification content
-//        let content = UNMutableNotificationContent()
-//        content.title = "I am a notification"
-//        content.body = "hello"
-//
-//        // MARK: - 3.create the notification trigger
-//        let date = Date().addingTimeInterval(5)
-//        let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
-//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
-//
-//        // MARK: - 4.create the request
-//
-//        let uuidString = UUID().uuidString
-//        let request = UNNotificationRequest(identifier: uuidString, content: content, trigger: trigger)
-//
-//        // MARK: - 5.register with notification center
-//        center.add(request) { (error) in
-//            // check the error parameter and handle any errors
-//        }
 
     }
     
@@ -87,7 +60,7 @@ class RootViewController: UIViewController {
         tableView.reloadData()
     }
     
-    @objc func didTapNew() {
+    @objc private func didTapNew() {
         let vc = NoteDetailsViewController()
         navigationController?.pushViewController(vc, animated: true)
     }
