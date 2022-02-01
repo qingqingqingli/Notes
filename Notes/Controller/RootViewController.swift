@@ -16,26 +16,19 @@ protocol PresentNoteContentDelegate: AnyObject {
 
 class RootViewController: UIViewController {
     
-    // define tableView
     var tableView = UITableView()
     let reuseTableViewIdentifier = "notesCellReuse"
     let cellHeight: CGFloat = 70
     
-    var firstLoad = true
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if (firstLoad) {
-            firstLoad = false
-            CoreDataManager.sharedManager.fetchAllNotes()
-        }
+        
+        CoreDataManager.sharedManager.fetchAllNotes()
         
         self.view.backgroundColor = .white
         navigationItem.title = "All Notes"
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(didTapNew))
         
-        // MARK: - initialise tableView
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
