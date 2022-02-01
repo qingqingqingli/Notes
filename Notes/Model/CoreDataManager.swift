@@ -40,19 +40,12 @@ class CoreDataManager {
         }
     }
     
-    // TODO: Change the delete logic
-    func delete(_ selectedNote: Note){
+    func delete(_ note: Note){
         let context: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
+        context.delete(note)
         do {
-            let results: NSArray = try context.fetch(request) as NSArray
-            for result in results {
-                let note = result as! Note
-                if (note == selectedNote) {
-                    note.deletedTime = Date()
-                    try context.save()
-                }
-            }
+            try context.save()
+            fetchAllNotes()
         } catch {
             print("Fetch failed")
         }
@@ -98,19 +91,13 @@ class CoreDataManager {
         }
     }
     
-    func fetchAllNotes() -> [Note] {
-        var notes: [Note] = []
+    func fetchAllNotes() {
         let context: NSManagedObjectContext = CoreDataManager.sharedManager.persistentContainer.viewContext
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
         do {
-            let results: NSArray = try context.fetch(request) as NSArray
-            for result in results {
-                let note = result as! Note
-                notes.append(note)
-            }
-        } catch {
-            print("Fetch failed")
+            notes = try context.fetch(request) as? [Note] ?? []
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
         }
-        return notes
     }
 }

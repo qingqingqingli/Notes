@@ -13,5 +13,4 @@ class Note: NSManagedObject {
     @NSManaged var title: String?
     @NSManaged var content: String?
     @NSManaged var creationTime: Date?
-    @NSManaged var deletedTime: Date?
 }

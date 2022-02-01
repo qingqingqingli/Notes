@@ -23,22 +23,12 @@ class RootViewController: UIViewController {
     
     var firstLoad = true
     
-    func exsitingNotes() -> [Note] {
-        var existingNotes: [Note] = []
-        for note in notes {
-            if (note.deletedTime == nil) {
-                existingNotes.append(note)
-            }
-        }
-        return existingNotes
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if (firstLoad) {
             firstLoad = false
-            notes = CoreDataManager.sharedManager.fetchAllNotes()
+            CoreDataManager.sharedManager.fetchAllNotes()
         }
         
         self.view.backgroundColor = .white
@@ -78,11 +68,10 @@ class RootViewController: UIViewController {
 // MARK: - UITableViewDataSource
 extension RootViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return exsitingNotes().count
+        return notes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let notes = exsitingNotes()
         if let cell = tableView.dequeueReusableCell(withIdentifier: reuseTableViewIdentifier, for: indexPath) as? NoteTableViewCell {
             let note = notes[indexPath.row]
             cell.configure(note: note)
@@ -102,7 +91,7 @@ extension RootViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedNote = exsitingNotes()[indexPath.row]
+        let selectedNote = notes[indexPath.row]
         let vc = NoteDetailsViewController()
         vc.selectedNote = selectedNote
         navigationController?.pushViewController(vc, animated: true)
@@ -115,7 +104,7 @@ extension RootViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             tableView.beginUpdates()
-            let selectedNote = exsitingNotes()[indexPath.row]
+            let selectedNote = notes[indexPath.row]
             CoreDataManager.sharedManager.delete(selectedNote)
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()

@@ -3,11 +3,10 @@
     <entity name="Note" representedClassName="Note" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String"/>
         <attribute name="creationTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="deletedTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Note" positionX="-63" positionY="-18" width="128" height="104"/>
+        <element name="Note" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>
