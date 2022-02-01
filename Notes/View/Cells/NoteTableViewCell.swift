@@ -34,7 +34,7 @@ class NoteTableViewCell: UITableViewCell {
     
     func setupConstraints(){
         let widthPadding: CGFloat = 20
-        let heightPadding: CGFloat = 8
+        let heightPadding: CGFloat = 12
         let labelHeight: CGFloat = 20
         
         NSLayoutConstraint.activate([

@@ -34,7 +34,6 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         
         // set up titleField
         titleField.isScrollEnabled = false
-        // did not work to wrap the text
         titleField.textContainer.lineBreakMode = .byCharWrapping
         titleField.translatesAutoresizingMaskIntoConstraints = false
         titleField.layer.borderWidth = 1
@@ -42,6 +41,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         titleField.layer.cornerRadius = 5
         titleField.autocorrectionType = .no
         titleField.font = UIFont.preferredFont(forTextStyle: .title3)
+        titleField.isScrollEnabled = false
         
         // set up noteField
         contentField.translatesAutoresizingMaskIntoConstraints = false
@@ -51,10 +51,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         contentField.autocorrectionType = .no
         contentField.font = UIFont.preferredFont(forTextStyle: .body)
         
-        // set up save option on the right corner
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteButtonTapped))
-        
-        // set up deleteButton
+        // set up saveButton
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.setTitle("Save", for: .normal)
         saveButton.setTitleColor(.systemBlue, for: .normal)
@@ -62,6 +59,9 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         saveButton.layer.borderColor = UIColor.systemBlue.cgColor
         saveButton.layer.cornerRadius = 10
         saveButton.addTarget(self, action: #selector(saveButtonTapped), for: .touchUpInside)
+        
+        // set up delete button
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteButtonTapped))
         
         view.addSubview(titleField)
         view.addSubview(contentField)
@@ -74,7 +74,6 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
     @objc private func deleteButtonTapped(_ sender: Any){
         if (titleField.text.count > 0){
             let alert = UIAlertController(title: "Please confirm", message: "Do you want to delete this note?", preferredStyle: .alert)
-            // TODO: return a void handler
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
                 print("Dimiss clicked")
             }))
@@ -107,18 +106,17 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
     
     func setupConstraints(){
         let padding: CGFloat = 8
-        let titleFieldHeight: CGFloat = 50
+        let buttonHeight: CGFloat = 50
         
         NSLayoutConstraint.activate([
             titleField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
             titleField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            titleField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
-            titleField.heightAnchor.constraint(equalToConstant: titleFieldHeight)
+            titleField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding)
         ])
         NSLayoutConstraint.activate([
             saveButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
             saveButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -padding),
-            saveButton.heightAnchor.constraint(equalToConstant: titleFieldHeight),
+            saveButton.heightAnchor.constraint(equalToConstant: buttonHeight),
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding)
         ])
         NSLayoutConstraint.activate([
