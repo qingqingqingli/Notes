@@ -25,7 +25,7 @@ class NoteTableViewCell: UITableViewCell {
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(contentLabel)
         
-        creationTimeLabel.font = .systemFont(ofSize: 10)
+        creationTimeLabel.font = .systemFont(ofSize: 16)
         creationTimeLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(creationTimeLabel)
         
@@ -49,12 +49,21 @@ class NoteTableViewCell: UITableViewCell {
             contentLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: heightPadding / 2),
             contentLabel.heightAnchor.constraint(equalToConstant: labelHeight)
         ])
+        NSLayoutConstraint.activate([
+            creationTimeLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -widthPadding),
+            creationTimeLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
     }
     
     // MARK: - Configure note
     func configure(note: Note){
+        
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "YYYY/MM/DD"
+        
         titleLabel.text = note.title
         contentLabel.text = note.content
+        creationTimeLabel.text = dateFormat.string(from: note.creationTime!)
     }
     
     required init?(coder: NSCoder) {
