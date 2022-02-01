@@ -13,4 +13,5 @@
 
 ### Demo
 
-[![demo](https://github.com/qingqingqingli/Notes/blob/master/notes_app_demo.mov)](https://github.com/qingqingqingli/notes)
+https://user-images.githubusercontent.com/20255161/152041528-c7f06843-b566-4d67-8de8-0984fcfe6d49.mov
+
