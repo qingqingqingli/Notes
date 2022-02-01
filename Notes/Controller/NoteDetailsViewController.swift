@@ -75,7 +75,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         if (titleField.text.count > 0){
             let alert = UIAlertController(title: "Please confirm", message: "Do you want to delete this note?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-                print("Dimiss clicked")
+                return
             }))
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
                 if let note = self.selectedNote {

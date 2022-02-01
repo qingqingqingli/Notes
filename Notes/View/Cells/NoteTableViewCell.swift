@@ -57,7 +57,6 @@ class NoteTableViewCell: UITableViewCell {
     
     // MARK: - Configure note
     func configure(note: Note){
-        
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "YYYY/MM/DD"
         
