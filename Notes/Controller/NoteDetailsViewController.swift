@@ -10,7 +10,7 @@ import CoreData
 
 var notes: [Note] = []
 
-class NoteDetailsViewController: UIViewController {
+class NoteDetailsViewController: UIViewController, UITextViewDelegate {
 
     var titleField = UITextView()
     var contentField = UITextView()
@@ -25,6 +25,9 @@ class NoteDetailsViewController: UIViewController {
             titleField.text = selectedNote?.title
             contentField.text = selectedNote?.content
         }
+        
+        self.titleField.delegate = self
+        self.contentField.delegate = self
         
         self.view.backgroundColor = .white
         navigationItem.title = "Note Details"
@@ -65,9 +68,9 @@ class NoteDetailsViewController: UIViewController {
         view.addSubview(saveButton)
         
         setupConstraints()
-        
     }
     
+    // MARK: - Button action selectors
     @objc func deleteButtonTapped(_ sender: Any){
         if (titleField.text.count > 0){
             let alert = UIAlertController(title: "Please confirm", message: "Do you want to delete this note?", preferredStyle: .alert)
@@ -91,6 +94,15 @@ class NoteDetailsViewController: UIViewController {
             title: titleField.text,
             content: contentField.text)
         navigationController?.popViewController(animated: true)
+    }
+    
+    // MARK: - Dismiss keyboard on return key
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
     }
     
     func setupConstraints(){
@@ -117,6 +129,4 @@ class NoteDetailsViewController: UIViewController {
         ])
 
     }
-    
-    
 }
