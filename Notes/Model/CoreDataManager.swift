@@ -11,7 +11,9 @@ import CoreData
 class CoreDataManager {
     
     // MARK: - Singleton
-    static let sharedManager = CoreDataManager()
+    static let shared = CoreDataManager()
+    
+    private(set) var notes = [Note]()
     
     // MARK: - Avoid additional initialization
     private init() {}
@@ -92,8 +94,16 @@ class CoreDataManager {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "Note")
         do {
             notes = try context.fetch(request) as? [Note] ?? []
+        } catch let error as NoteError {
+            if case .notFound = error {
+                print("Not found!")
+            }
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
+}
+
+enum NoteError: Error {
+    case notFound
 }

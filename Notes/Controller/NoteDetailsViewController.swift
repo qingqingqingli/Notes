@@ -8,8 +8,6 @@
 import UIKit
 import CoreData
 
-var notes: [Note] = []
-
 class NoteDetailsViewController: UIViewController, UITextViewDelegate {
 
     var titleField = UITextView()
@@ -63,6 +61,16 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
         // set up delete button
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Delete", style: .done, target: self, action: #selector(deleteButtonTapped))
         
+        // set up gradient layer
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = view.bounds
+        gradientLayer.colors = [
+            UIColor.systemPink.cgColor,
+            UIColor.systemOrange.cgColor,
+        ]
+        
+        view.layer.addSublayer(gradientLayer)
+        
         view.addSubview(titleField)
         view.addSubview(contentField)
         view.addSubview(saveButton)
@@ -79,7 +87,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
             }))
             alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
                 if let note = self.selectedNote {
-                    CoreDataManager.sharedManager.delete(note)
+                    CoreDataManager.shared.delete(note)
                 }
                 self.navigationController?.popViewController(animated: true)
             }))
@@ -88,7 +96,7 @@ class NoteDetailsViewController: UIViewController, UITextViewDelegate {
     }
     
     @objc private func saveButtonTapped(_ sender: Any){
-        CoreDataManager.sharedManager.save(
+        CoreDataManager.shared.save(
             selectedNote,
             title: titleField.text,
             content: contentField.text)

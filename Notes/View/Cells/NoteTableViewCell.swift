@@ -8,7 +8,9 @@
 import UIKit
 
 class NoteTableViewCell: UITableViewCell {
-
+    
+    static let reuseIdentifier = "notesCellReuse"
+    
     var titleLabel = UILabel()
     var contentLabel = UILabel()
     var creationTimeLabel = UILabel()
@@ -58,7 +60,8 @@ class NoteTableViewCell: UITableViewCell {
     // MARK: - Configure note
     func configure(note: Note){
         let dateFormat = DateFormatter()
-        dateFormat.dateFormat = "YYYY/MM/dd"
+        dateFormat.dateStyle = .none
+        dateFormat.timeStyle = .short
         
         titleLabel.text = note.title
         contentLabel.text = note.content
