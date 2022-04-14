@@ -7,12 +7,11 @@
 
 import UIKit
 import CoreData
-import UserNotifications
 
 class RootViewController: UIViewController {
     
     lazy var tableView: UITableView = {
-        let view = UITableView(frame: .zero, style:    .insetGrouped)
+        let view = UITableView(frame: .zero, style: .insetGrouped)
         view.rowHeight = 70
         view.delegate = self
         view.dataSource = self
@@ -31,7 +30,7 @@ class RootViewController: UIViewController {
         
         CoreDataManager.shared.fetchAllNotes()
         
-        self.view.backgroundColor = .white
+        view.backgroundColor = .white
         navigationItem.title = "All Notes"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(
@@ -86,7 +85,6 @@ extension RootViewController: UITableViewDataSource {
         
         let note = CoreDataManager.shared.notes[indexPath.row]
         cell.configure(note: note)
-        cell.selectionStyle = .none
         
         return cell
     }
